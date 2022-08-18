@@ -1,0 +1,216 @@
+{{define "main"}}
+<html lang="en">
+{{ template "header" .}}
+<body>
+{{ template "nav" .}}
+<main class="container">
+<!--  <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">-->
+<!--    <div class="col-md-6 px-0">-->
+<!--      <h1 class="display-4 fst-italic">Заголовок более подробного сообщения в блоге</h1>-->
+<!--      <p class="lead my-3">Множественные строки текста, которые образуют-->
+<!-- ленту, быстро и эффективно информируют новых читателей о том, что -->
+<!--наиболее интересно в содержании этого сообщения.</p>-->
+<!--      <p class="lead mb-0"><a href="#" class="text-white fw-bold">Продолжить чтение...</a></p>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row mb-2">-->
+<!--    <div class="col-md-6">-->
+<!--      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">-->
+<!--        <div class="col p-4 d-flex flex-column position-static">-->
+<!--          <strong class="d-inline-block mb-2 text-primary">Мир</strong>-->
+<!--          <h3 class="mb-0">Рекомендуемый пост</h3>-->
+<!--          <div class="mb-1 text-muted">12 Ноября</div>-->
+<!--          <p class="card-text mb-auto">Это более широкая карточка с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту.</p>-->
+<!--          <a href="#" class="stretched-link">Продолжить чтение</a>-->
+<!--        </div>-->
+<!--        <div class="col-auto d-none d-lg-block">-->
+<!--          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>-->
+
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-md-6">-->
+<!--      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">-->
+<!--        <div class="col p-4 d-flex flex-column position-static">-->
+<!--          <strong class="d-inline-block mb-2 text-success">Дизайн</strong>-->
+<!--          <h3 class="mb-0">Заголовок поста</h3>-->
+<!--          <div class="mb-1 text-muted">11 Ноября</div>-->
+<!--          <p class="mb-auto">Это более широкая карточка с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту.</p>-->
+<!--          <a href="#" class="stretched-link">Продолжить чтение</a>-->
+<!--        </div>-->
+<!--        <div class="col-auto d-none d-lg-block">-->
+<!--          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Эскиз" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Эскиз</text></svg>-->
+
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <div class="row g-5">
+    <div class="col-md-8">
+      <h3 class="pb-4 mb-4 fst-italic border-bottom">
+        Сделано наспех, реализованы только CRUD-методы работы с объектами User, Post и Comment.
+      </h3>
+
+      <article class="blog-post">
+        <h2 class="blog-post-title">Доступный функционал:</h2>
+          <h3 class="pb-4 mb-4 border-bottom">
+              Users - Пользователи
+          </h3>
+          <h4>
+              Модель данных
+          </h4>
+            <code>
+                type User struct { <br>
+                Id        int    `json:"id"` <br>
+                Username  string `json:"username"` <br>
+                Password  string `json:"password"` <br>
+                FirstName string `json:"first_name"` <br>
+                LastName  string `json:"last_name"` <br>
+                Email     string `json:"email"` <br>
+                IsActive  bool   `json:"is_active"` <br>
+                }
+            </code>
+          <hr>
+          <h4>
+              Методы (path /users/)
+          </h4>
+          <ul>
+              <li>
+                  GET - Получить данные пользователя
+                  <p>curl -X GET http://localhost:8080/users/5</p>
+              </li>
+              <li>
+                  POST - Создать нового пользователя
+                  <p>curl -X POST http://localhost:8080/users/ -H 'Content-Type: application/json' -d '{"username":"tester","password":"test","first_name":"First","last_name":"Last","email":"tester@example.loc"}'</p>
+              </li>
+              <li>
+                  PUT - Обновить данные пользователя
+                  <p>curl -X PUT http://localhost:8080/users/ -H 'Content-Type: application/json' -d '{"id":7,"username":"Updated","is_active":true}'</p>
+              </li>
+              <li>
+                  DELETE - Удалить пользователя
+                  <p>curl -X DELETE http://localhost:8080/users/5</p>
+              </li>
+          </ul>
+
+          <h3 class="pb-4 mb-4 border-bottom">
+              Posts - посты блога
+          </h3>
+          <h4>
+              Модель данных
+          </h4>
+          <code>
+              type Post struct { <br>
+              Id     int    `json:"id"` <br>
+              Title  string `json:"title"` <br>
+              Body   string `json:"body"` <br>
+              UserId int    `json:"user_id"` <br>
+              }
+          </code>
+          <hr>
+          <h4>
+              Методы (path /posts/)
+          </h4>
+          <ul>
+              <li>
+                  GET - Получить пост
+                  <p>curl -X GET http://localhost:8080/posts/7</p>
+              </li>
+              <li>
+                  POST - Создать нового поста
+                  <p>curl -X POST http://localhost:8080/posts/ -H 'Content-Type: application/json' -d '{"title":"NewPost","body":"New Content","user_id":7}'</p>
+              </li>
+              <li>
+                  PUT - Обновить данные поста
+                  <p>curl -X PUT http://localhost:8080/posts/ -H 'Content-Type: application/json' -d '{"id":5,"title":"Updated1","body":"Updated Content"}'</p>
+              </li>
+              <li>
+                  DELETE - Удалить пост
+                  <p>curl -X DELETE http://localhost:8080/posts/7</p>
+              </li>
+          </ul>
+
+          <h3 class="pb-4 mb-4 border-bottom">
+              Comments - Комментарии
+          </h3>
+          <h4>
+              Модель данных
+          </h4>
+          <code>
+              type Comment struct { <br>
+              Id     int       `json:"id"` <br>
+              Date   time.Time `json:"date"` <br>
+              Body   string    `json:"body"` <br>
+              UserId int       `json:"user_id"` <br>
+              PostId int       `json:"post_id"` <br>
+              }
+          </code>
+          <hr>
+          <h4>
+              Методы (path /comments/)
+          </h4>
+          <ul>
+              <li>
+                  GET - Получить комментарий
+                  <p>curl -X GET http://localhost:8080/comments/7</p>
+              </li>
+              <li>
+                  POST - Создать нового комментария
+                  <p>curl -X POST http://localhost:8080/comments/ -H 'Content-Type: application/json' -d '{"body":"New Content","user_id":4,"post_id":2}'</p>
+              </li>
+              <li>
+                  PUT - Обновить комментарий
+                  <p>curl -X PUT http://localhost:8080/comments/ -H 'Content-Type: application/json' -d '{"id":5,"body":"Updated Content"}'</p>
+                  <p>curl -X PUT http://localhost:8080/comments/ -H 'Content-Type: application/json' -d '{"id":6,"body":"Updated Comment","user_id":1}'</p>
+              </li>
+              <li>
+                  DELETE - Удалить комментарий
+                  <p>curl -X DELETE http://localhost:8080/comments/7</p>
+              </li>
+          </ul>
+    </div>
+
+    <div class="col-md-4">
+      <div class="position-sticky" style="top: 2rem;">
+        <div class="p-4 mb-3 bg-light rounded">
+          <h4 class="fst-italic">О нас</h4>
+          <p class="mb-0">Делаем API - быстро, качественно, недорого. Выбирайте 2 любых параметра)</p>
+        </div>
+
+        <div class="p-4">
+          <h4 class="fst-italic">Архивы</h4>
+          <ol class="list-unstyled mb-0">
+            <li><a href="#">Март 2021</a></li>
+            <li><a href="#">Февраль 2021</a></li>
+            <li><a href="#">Январь 2021</a></li>
+            <li><a href="#">Декабрь 2020</a></li>
+            <li><a href="#">Ноябрь 2020</a></li>
+            <li><a href="#">Октябрь 2020</a></li>
+            <li><a href="#">Сентябрь 2020</a></li>
+            <li><a href="#">Август 2020</a></li>
+            <li><a href="#">Июль 2020</a></li>
+            <li><a href="#">Июнь 2020</a></li>
+            <li><a href="#">Май 2020</a></li>
+            <li><a href="#">Апрель 2020</a></li>
+          </ol>
+        </div>
+
+        <div class="p-4">
+          <h4 class="fst-italic">В другом месте</h4>
+          <ol class="list-unstyled">
+            <li><a href="#">GitHub</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+{{ template "footer" .}}
+</body>
+</html>
+{{end}}
