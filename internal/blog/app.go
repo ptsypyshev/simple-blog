@@ -36,7 +36,8 @@ func (a *App) Init() (io.Closer, error) {
 		return nil, err
 	}
 	defer func() { _ = logger.Sync() }()
-	tracer, closer := InitJaeger("App", "localhost:6831", logger)
+	tracer, closer := InitJaeger(logger)
+	//tracer, closer := InitJaeger("App", "localhost:6831", logger)
 
 	db, err := pgdb.InitDB(ctx, logger, tracer)
 	if err != nil {

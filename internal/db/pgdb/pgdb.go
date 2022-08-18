@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	DatabaseURL = "postgres://usr:pwd@localhost:5432/simpleblog?sslmode=disable"
+	DatabaseURL = "postgres://usr:pwd@postgres:5432/simpleblog?sslmode=disable"
 	InitDBQuery = `
 -- Drop All Tables and Extensions
 DROP TABLE IF EXISTS users CASCADE;

@@ -26,38 +26,38 @@ func (w *zapWrapper) Infof(msg string, args ...interface{}) {
 }
 
 // InitJaeger Для инициализации через передаваемые параметры
-func InitJaeger(service string, jaegerServerHostPort string, logger *zap.Logger) (opentracing.Tracer, io.Closer) {
-	cfg := &config.Configuration{
-		ServiceName: service,
-		Sampler: &config.SamplerConfig{
-			Type:  "const",
-			Param: 1,
-		},
-		Reporter: &config.ReporterConfig{
-			LogSpans:           true,
-			LocalAgentHostPort: jaegerServerHostPort,
-		},
-	}
-
-	tracer, closer, err := cfg.NewTracer(config.Logger(&zapWrapper{logger: logger}))
-	if err != nil {
-		panic(fmt.Sprintf("ERROR: cannot init Jaeger: %v\n", err))
-	}
-	return tracer, closer
-}
-
-// InitJaeger Для инициализации через переменные окружения
-//func InitJaeger(logger *zap.Logger) (opentracing.Tracer, io.Closer) {
-//	cfg, err := config.FromEnv()
-//	if err != nil {
-//		logger.Warn("cannot parse Jaeger env vars", zap.Error(err))
+//func InitJaeger(service string, jaegerServerHostPort string, logger *zap.Logger) (opentracing.Tracer, io.Closer) {
+//	cfg := &config.Configuration{
+//		ServiceName: service,
+//		Sampler: &config.SamplerConfig{
+//			Type:  "const",
+//			Param: 1,
+//		},
+//		Reporter: &config.ReporterConfig{
+//			LogSpans:           true,
+//			LocalAgentHostPort: jaegerServerHostPort,
+//		},
 //	}
+//
 //	tracer, closer, err := cfg.NewTracer(config.Logger(&zapWrapper{logger: logger}))
 //	if err != nil {
 //		panic(fmt.Sprintf("ERROR: cannot init Jaeger: %v\n", err))
 //	}
 //	return tracer, closer
 //}
+
+// InitJaeger Для инициализации через переменные окружения
+func InitJaeger(logger *zap.Logger) (opentracing.Tracer, io.Closer) {
+	cfg, err := config.FromEnv()
+	if err != nil {
+		logger.Warn("cannot parse Jaeger env vars", zap.Error(err))
+	}
+	tracer, closer, err := cfg.NewTracer(config.Logger(&zapWrapper{logger: logger}))
+	if err != nil {
+		panic(fmt.Sprintf("ERROR: cannot init Jaeger: %v\n", err))
+	}
+	return tracer, closer
+}
 
 var LogFunc = log.Println
 var FatalFunc = log.Fatal
